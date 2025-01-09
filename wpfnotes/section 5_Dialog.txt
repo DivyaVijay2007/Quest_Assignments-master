@@ -1,0 +1,45 @@
+Open a File and displaying the text :
+
+
+        <Button Click="Button_Click">Open File</Button>
+        <TextBlock x:Name="myTextblock"></TextBlock>
+	
+
+	
+   private void Button_Click(object sender, RoutedEventArgs e)
+   {
+       OpenFileDialog ofd = new OpenFileDialog();
+       if (ofd.ShowDialog()==true)
+       {
+           myTextblock.Text = File.ReadAllText(ofd.FileName);
+       }  
+   }
+   
+   
+---------------------------------------------------------------------------------------------------------------------------
+
+Set directory while opening:
+
+            ofd.InitialDirectory = Environment.CurrentDirectory;
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------   
+
+  <StackPanel>
+      <Button Click="Button_Click">Open File</Button>
+      <TextBox x:Name="myTextblock"></TextBox>
+      <Button Click="Button_Click_1">Save File</Button>
+
+  </StackPanel>
+
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog()==true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, myTextblock.Text);
+            }
+        }

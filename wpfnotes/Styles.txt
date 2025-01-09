@@ -1,0 +1,236 @@
+ <StackPanel> 
+      <Button Content = "Button1" Height = "30" Width = "80" 
+         Foreground = "Blue" FontSize = "12" Margin = "10"/> 
+      <Button Content = "Button2" Height = "30" Width = "80" 
+         Foreground = "Blue" FontSize = "12" Margin = "10"/> 
+      <Button Content = "Button3" Height = "30" Width = "80" 
+         Foreground = "Blue" FontSize = "12" Margin = "10"/> 
+   </StackPanel> 
+   
+   
+   
+   
+   <Window.Resources> 
+      <Style x:Key = "myButtonStyle" TargetType = "Button"> 
+         <Setter Property = "Height" Value = "30" /> 
+         <Setter Property = "Width" Value = "80" /> 
+         <Setter Property = "Foreground" Value = "Blue" /> 
+         <Setter Property = "FontSize" Value = "12" /> 
+         <Setter Property = "Margin" Value = "10" /> 
+      </Style> 
+   </Window.Resources> 
+	
+   <StackPanel> 
+      <Button Content = "Button1" Style = "{StaticResource myButtonStyle}" /> 
+      <Button Content = "Button2" Style = "{StaticResource myButtonStyle}" /> 
+      <Button Content = "Button3" Style="{StaticResource myButtonStyle}" /> 
+   </StackPanel> 
+   
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+Style level :
+
+Control level
+Layout level
+Windows level
+Application level
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+<Window.Resources>
+    <!-- .... other resources .... -->
+
+    <!--A Style that affects all TextBlocks-->
+    <Style TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+    
+    <!--A Style that extends the previous TextBlock Style with an x:Key of TitleText-->
+    <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+           TargetType="TextBlock"
+           x:Key="TitleText">
+        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.0" Color="#90DDDD" />
+                        <GradientStop Offset="1.0" Color="#5BFFFF" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</Window.Resources>
+
+
+<StackPanel>
+    <TextBlock Style="{StaticResource TitleText}" Name="textblock1">My Pictures</TextBlock>
+    <TextBlock>Check out my new pictures!</TextBlock>
+</StackPanel>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+https://www.c-sharpcorner.com/article/static-dynamic-resources-in-wpf/
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Static resource  Vs Dynamic Resource:
+
+
+<Window.Resources>
+     <SolidColorBrush x:Key="SolidAquamarine" Color="Aquamarine"/>
+     <SolidColorBrush x:Key="SolidBlack" Color="Black"/>
+ </Window.Resources>
+ <StackPanel x:Name="MainGrid">
+     <Button x:Name="SubmitButton"    
+            Background="{StaticResource SolidAquamarine}"    
+            BorderBrush="{StaticResource SolidBlack}"    
+            Content="Submit Submit"    
+            Height="20"    
+            Width="100"/>
+     <Button x:Name="ExitButton"    
+            Background="{DynamicResource ButtonExitBackgroundColor}"    
+            BorderBrush="{DynamicResource ButtonExitBorderColor}"    
+            Margin="0 10 0 0"    
+            Content="Exit Submit"    
+            Height="20"    
+            Width="100"/>
+ </StackPanel> 
+ 
+ 
+      public MainWindow()
+      {
+          InitializeComponent();
+          this.Resources["ButtonExitBackgroundColor"] = new SolidColorBrush(Colors.Pink);
+          this.Resources["ButtonExitBorderColor"] = new SolidColorBrush(Colors.Black);
+      }
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Resource Dictionary :
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key = "brushResource" Color = "Blue" />
+</ResourceDictionary>
+
+
+   <Application.Resources>
+       <ResourceDictionary Source = "Dictionary1.xaml"/>
+   </Application.Resources>
+   
+   
+           <Rectangle Height = "50" Margin = "20" Fill = "{StaticResource brushResource}" />
+		   
+		   -----------------------------------------------------------------------------------------------------------------------------------------------
+		   
+A trigger basically enables you to change property values or take actions based on the value of a property. So, it allows you to dynamically change the appearance and/or behavior of your control without having to create a new one.
+
+Property Triggers
+Data Triggers
+Event Triggers
+
+
+Property Trigger :
+
+In property triggers, when a change occurs in one property, it will bring either an immediate or an animated change in another property. For example, you can use a property trigger to change the appearance of a button when the mouse hovers over the button.
+
+
+   <Window.Resources> 
+      <Style x:Key = "TriggerStyle" TargetType = "Button"> 
+         <Setter Property = "Foreground" Value = "Blue" /> 
+         <Style.Triggers> 
+            <Trigger Property = "IsMouseOver" Value = "True"> 
+               <Setter Property = "Foreground" Value = "Green" /> 
+            </Trigger> 
+         </Style.Triggers> 
+      </Style> 
+   </Window.Resources> 
+
+
+ <Grid> 
+      <Button Width = "100" Height = "70"
+         Style = "{StaticResource TriggerStyle}" Content = "Trigger"/> 
+   </Grid> 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Data Triggers : 
+
+A data trigger performs some actions when the bound data satisfies some conditions. Let’s have a look at the following XAML code in which a checkbox and a text block are created with some properties. When the checkbox is checked, it will change its foreground color to red.
+
+
+   <StackPanel HorizontalAlignment = "Center"> 
+      <CheckBox x:Name = "redColorCheckBox" 
+         Content = "Set red as foreground color" Margin = "20"/> 
+			
+      <TextBlock Name = "txtblock" VerticalAlignment = "Center" 
+         Text = "Event Trigger" FontSize = "24" Margin = "20"> 
+         <TextBlock.Style> 
+            <Style> 
+               <Style.Triggers> 
+                  <DataTrigger Binding = "{Binding ElementName = redColorCheckBox, Path = IsChecked}" 
+                     Value = "true"> 
+                     <Setter Property = "TextBlock.Foreground" Value = "Red"/> 
+                     <Setter Property = "TextBlock.Cursor" Value = "Hand" /> 
+                  </DataTrigger> 
+               </Style.Triggers> 
+            </Style> 
+         </TextBlock.Style> 
+      </TextBlock> 
+		
+   </StackPanel> 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Event Trigger :
+
+An event trigger performs some actions when a specific event is fired. It is usually used to accomplish some animation on control such DoubleAnumatio, ColorAnimation
+
+
+  <Grid> 
+      <Button Content = "Click Me" Width = "60" Height = "30">
+		
+         <Button.Triggers> 
+            <EventTrigger RoutedEvent = "Button.Click"> 
+               <EventTrigger.Actions> 
+                  <BeginStoryboard> 
+                     <Storyboard> 
+							
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty = 
+                           "Width" Duration = "0:0:4"> 
+                           <LinearDoubleKeyFrame Value = "60" KeyTime = "0:0:0"/> 
+                           <LinearDoubleKeyFrame Value = "120" KeyTime = "0:0:1"/> 
+                           <LinearDoubleKeyFrame Value = "200" KeyTime = "0:0:2"/> 
+                           <LinearDoubleKeyFrame Value = "300" KeyTime = "0:0:3"/> 
+                        </DoubleAnimationUsingKeyFrames>
+								
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty = "Height" 
+                           Duration = "0:0:4"> 
+                           <LinearDoubleKeyFrame Value = "30" KeyTime = "0:0:0"/> 
+                           <LinearDoubleKeyFrame Value = "40" KeyTime = "0:0:1"/> 
+                           <LinearDoubleKeyFrame Value = "80" KeyTime = "0:0:2"/> 
+                           <LinearDoubleKeyFrame Value = "150" KeyTime = "0:0:3"/> 
+                        </DoubleAnimationUsingKeyFrames>
+								
+                     </Storyboard> 
+                  </BeginStoryboard> 
+               </EventTrigger.Actions> 
+            </EventTrigger> 
+         </Button.Triggers> 
+			
+      </Button> 
+   </Grid> 
+   
+-----------------------------------------------------------------------------------------------------------------------------------------------

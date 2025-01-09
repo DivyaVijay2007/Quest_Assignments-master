@@ -1,0 +1,96 @@
+Microsoft version of xml for cding a GUI
+will consist of xaml file and code behind file
+XAML needs a opening tag and closing tag
+Most of the elements are inherited from content control 
+
+XAML Overview
+
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/xaml/?view=netdesktop-8.0
+
+XAML Syntax
+
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/advanced/xaml-syntax-in-detail?view=netframeworkdesktop-4.8
+----------------------------------------------------------------------------------------------------------
+
+
+Windows , partial classes and some XAML Syntax
+
+
+Windows:
+
+Title bar,
+maximise button
+minimise button
+restore button
+
+
+window state --->normal, minimise and maximise
+windows startuplocation --> where the window will be positioned
+Topmost -->
+sizetocontent -->decides if the windows should be resize itself to fit automatically
+show in taskbar -->if set to false, your window wont be represented in windows taskbar
+Icon -->  
+
+ ----------------------------------------------------------------------------------------------------------
+x:Class -->which class file need to be used
+
+xmlns --->namespace in which to resolve xml element names
+
+xmlns:d --> d means designer
+
+xmlns:mc --> mc: markup compatibility  --> used for interoperability (word 2010, 2013 example)
+
+xmlns:local ---> used for accessing custom controls which are created in other part of the application.
+
+
+----------------------------------------------------------------------------------------------------------
+
+App.config file :
+
+you can change the .net runtime here
+
+contain variable configurations of an application
+
+connection strings to database
+
+how the application should run and hosted
+
+----------------------------------------------------------------------------------------------------------
+Explain about App.xaml file
+
+--->StartupUri
+--> global themes will be defined here 
+
+----------------------------------------------------------------------------------------------------------
+
+
+Accessing properties of elements at runtime :
+
+--> create a label in xaml 
+--> change some property in backend
+
+
+----------------------------------------------------------------------------------------------------------
+
+.net core vs .net framework:
+
+.net core --> cross platform and more efficient than .net framework , open source 
+
+.net framework --> only for windows , can be run only if users run version of .net framework 
+                   no new apis will be added 
+
+
+----------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+	
+
+
+
+
+

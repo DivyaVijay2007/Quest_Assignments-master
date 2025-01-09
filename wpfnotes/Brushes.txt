@@ -1,0 +1,368 @@
+It is a powerful framework for building Windows applications.
+WPF was first introduces in .NET framework 3.0 version, and then so many other features were added in the subsequent .NET framework versions.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Managed layer :
+
+PresentationFramework.dll: This section contains high-level features like application windows, panels, styles controls, layouts, content and so on that helps us to build our application. It also implements the end-user presentation features including data binding, time-dependencies, animations and many more.
+
+
+PresentationCore.dll: This is a low-level API exposed by WPF providing features for 2D, 3D, geometry and so on. The Presentation Core provides a managed wrapper for MIL and implements the core services for WPF such as UI Element and visual . The Visual System creates visual tree that contains applications Visual Elements and rendering instructions
+
+
+
+WindowsBase.dll: It holds the more basic elements that are capable to be reused outside the WPF environment like Dispatcher objects and Dependency objects.
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+UnManaged Layer:
+
+
+milCore.dll: The composition engine that renders the WPF application is a native component. It is called the Media Integration Layer (MIL) and resides in milCore.dll. The purpose of the milCore is to interface directly with DirectX and provide basic support for 2D and 3D surface. This section is unmanaged code because it acts as a bridge between WPF managed and the DirectX / User32 unmanaged API.
+
+WindowsCodecs.dll: WindowsCodecs is another low-level API for imaging support in WPF applications like image processing, image displaying and scaling and so on. It consists of a number of codecs that encode/decode images into vector graphics that would be rendered into a WPF screen.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Core operating System Layer (Kernel):
+
+
+This layer has OS core components like User32, GDI, Device Drivers, Graphic cards and so on. These components are used by the application to access low-level APIs.
+
+DirectX: DirectX is the low-level API through which WPF renders all graphics. DirectX talks with drivers and renders the content.
+
+User32: User32 actually manages memory and process separation. It is the primary core API that every application uses. User32 decides which element will be placed where on the screen.
+
+GDI: GDI stands for Graphic Device Interface. GDI provides an expanded set of graphics primitives and a number of improvements in rendering quality.
+
+CLR: WPF leverages the full .NET Framework and executes on the Common Language Runtime (CLR).
+
+Device Drivers: Device Drivers are specific to the operating system. Device Drivers are used by the applications to access low-level APIs.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample WPF application:
+
+https://learn.microsoft.com/en-us/visualstudio/get-started/csharp/tutorial-wpf?view=vs-2022
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/wpf-brushes-overview?view=netframeworkdesktop-4.8
+
+Brushes :
+
+
+Everything visible on your screen is visible because it was painted by a brush. For example, a brush is used to describe the background of a button, the foreground of text, and the fill of a shape. This topic introduces the concepts of painting with Windows Presentation Foundation (WPF) brushes and provides example
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Types:
+
+SolidColourBrush
+LinearGradientBrush
+RadialGradientBrush
+ImageBrush
+DrawingBrush
+VisualBrush
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+SolidColourBrush:
+
+
+C#:
+
+Rectangle exampleRectangle = new Rectangle();
+exampleRectangle.Width = 75;
+exampleRectangle.Height = 75;
+
+// Create a SolidColorBrush and use it to
+// paint the rectangle.
+SolidColorBrush myBrush = new SolidColorBrush(Colors.Red);
+exampleRectangle.Fill = myBrush;
+
+XAML :
+
+<Rectangle Width="75" Height="75">
+  <Rectangle.Fill>
+    <SolidColorBrush Color="Red" />
+  </Rectangle.Fill>
+</Rectangle>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+LinearGradientBrush:
+
+C#:
+
+Rectangle exampleRectangle = new Rectangle();
+exampleRectangle.Width = 75;
+exampleRectangle.Height = 75;
+
+// Create a LinearGradientBrush and use it to
+// paint the rectangle.
+LinearGradientBrush myBrush = new LinearGradientBrush();
+myBrush.GradientStops.Add(new GradientStop(Colors.Yellow, 0.0));
+myBrush.GradientStops.Add(new GradientStop(Colors.Orange, 0.5));
+myBrush.GradientStops.Add(new GradientStop(Colors.Red, 1.0));
+
+exampleRectangle.Fill = myBrush;
+
+
+WPF:
+
+
+<Rectangle Width="75" Height="75">
+  <Rectangle.Fill>
+    <LinearGradientBrush>
+      <GradientStop Color="Yellow" Offset="0.0" />
+      <GradientStop Color="Orange" Offset="0.5" />
+      <GradientStop Color="Red" Offset="1.0" />
+    </LinearGradientBrush>
+  </Rectangle.Fill>
+</Rectangle>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+RadialGradientBrush:
+
+
+C#:
+
+Rectangle exampleRectangle = new Rectangle();
+exampleRectangle.Width = 75;
+exampleRectangle.Height = 75;
+
+// Create a RadialGradientBrush and use it to
+// paint the rectangle.
+RadialGradientBrush myBrush = new RadialGradientBrush();
+myBrush.GradientOrigin = new Point(0.75, 0.25);
+myBrush.GradientStops.Add(new GradientStop(Colors.Yellow, 0.0));
+myBrush.GradientStops.Add(new GradientStop(Colors.Orange, 0.5));
+myBrush.GradientStops.Add(new GradientStop(Colors.Red, 1.0));
+
+exampleRectangle.Fill = myBrush;
+
+
+WPF: 
+<Rectangle Width="75" Height="75">
+  <Rectangle.Fill>
+    <RadialGradientBrush GradientOrigin="0.75,0.25">
+      <GradientStop Color="Yellow" Offset="0.0" />
+      <GradientStop Color="Orange" Offset="0.5" />
+      <GradientStop Color="Red" Offset="1.0" />
+    </RadialGradientBrush>
+  </Rectangle.Fill>
+</Rectangle>
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+ImageBrush:
+
+C#:
+Rectangle exampleRectangle = new Rectangle();
+exampleRectangle.Width = 75;
+exampleRectangle.Height = 75;
+
+// Create an ImageBrush and use it to
+// paint the rectangle.
+ImageBrush myBrush = new ImageBrush();
+myBrush.ImageSource =
+    new BitmapImage(new Uri(@"sampleImages\pinkcherries.jpg", UriKind.Relative));
+
+exampleRectangle.Fill = myBrush;
+
+
+WPF:
+<Rectangle Width="75" Height="75">
+  <Rectangle.Fill>
+    <ImageBrush ImageSource="sampleImages\pinkcherries.jpg"  />
+  </Rectangle.Fill>
+</Rectangle>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+DrawingBrush:
+
+C#:
+Rectangle exampleRectangle = new Rectangle();
+exampleRectangle.Width = 75;
+exampleRectangle.Height = 75;
+
+// Create a DrawingBrush and use it to
+// paint the rectangle.
+DrawingBrush myBrush = new DrawingBrush();
+
+GeometryDrawing backgroundSquare =
+    new GeometryDrawing(
+        Brushes.White,
+        null,
+        new RectangleGeometry(new Rect(0, 0, 100, 100)));
+
+GeometryGroup aGeometryGroup = new GeometryGroup();
+aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 50, 50)));
+aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(50, 50, 50, 50)));
+
+LinearGradientBrush checkerBrush = new LinearGradientBrush();
+checkerBrush.GradientStops.Add(new GradientStop(Colors.Black, 0.0));
+checkerBrush.GradientStops.Add(new GradientStop(Colors.Gray, 1.0));
+
+GeometryDrawing checkers = new GeometryDrawing(checkerBrush, null, aGeometryGroup);
+
+DrawingGroup checkersDrawingGroup = new DrawingGroup();
+checkersDrawingGroup.Children.Add(backgroundSquare);
+checkersDrawingGroup.Children.Add(checkers);
+
+myBrush.Drawing = checkersDrawingGroup;
+myBrush.Viewport = new Rect(0, 0, 0.25, 0.25);
+myBrush.TileMode = TileMode.Tile;
+
+exampleRectangle.Fill = myBrush;
+
+
+
+WPF:
+
+<Rectangle Width="75" Height="75">
+  <Rectangle.Fill>
+    <DrawingBrush Viewport="0,0,0.25,0.25" TileMode="Tile">
+      <DrawingBrush.Drawing>
+        <DrawingGroup>
+          <GeometryDrawing Brush="White">
+            <GeometryDrawing.Geometry>
+              <RectangleGeometry Rect="0,0,100,100" />
+            </GeometryDrawing.Geometry>
+          </GeometryDrawing>
+
+          <GeometryDrawing>
+            <GeometryDrawing.Geometry>
+              <GeometryGroup>
+                <RectangleGeometry Rect="0,0,50,50" />
+                <RectangleGeometry Rect="50,50,50,50" />
+              </GeometryGroup>
+            </GeometryDrawing.Geometry>
+            <GeometryDrawing.Brush>
+              <LinearGradientBrush>
+                <GradientStop Offset="0.0" Color="Black" />
+                <GradientStop Offset="1.0" Color="Gray" />
+              </LinearGradientBrush>
+            </GeometryDrawing.Brush>
+          </GeometryDrawing>
+        </DrawingGroup>
+      </DrawingBrush.Drawing>
+    </DrawingBrush>
+  </Rectangle.Fill>
+</Rectangle>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+VisualBrush:
+
+C#:
+
+
+Rectangle exampleRectangle = new Rectangle();
+exampleRectangle.Width = 75;
+exampleRectangle.Height = 75;
+
+// Create a VisualBrush and use it
+// to paint the rectangle.
+VisualBrush myBrush = new VisualBrush();
+
+//
+// Create the brush's contents.
+//
+StackPanel aPanel = new StackPanel();
+
+// Create a DrawingBrush and use it to
+// paint the panel.
+DrawingBrush myDrawingBrushBrush = new DrawingBrush();
+GeometryGroup aGeometryGroup = new GeometryGroup();
+aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 50, 50)));
+aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(50, 50, 50, 50)));
+RadialGradientBrush checkerBrush = new RadialGradientBrush();
+checkerBrush.GradientStops.Add(new GradientStop(Colors.MediumBlue, 0.0));
+checkerBrush.GradientStops.Add(new GradientStop(Colors.White, 1.0));
+GeometryDrawing checkers = new GeometryDrawing(checkerBrush, null, aGeometryGroup);
+myDrawingBrushBrush.Drawing = checkers;
+aPanel.Background = myDrawingBrushBrush;
+
+// Create some text.
+TextBlock someText = new TextBlock();
+someText.Text = "Hello, World";
+FontSizeConverter fSizeConverter = new FontSizeConverter();
+someText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
+someText.Margin = new Thickness(10);
+
+aPanel.Children.Add(someText);
+
+myBrush.Visual = aPanel;
+exampleRectangle.Fill = myBrush;
+
+XAML:
+
+<Rectangle Width="75" Height="75">
+  <Rectangle.Fill>
+    <VisualBrush TileMode="Tile">
+      <VisualBrush.Visual>
+        <StackPanel>
+          <StackPanel.Background>
+            <DrawingBrush>
+              <DrawingBrush.Drawing>
+                <GeometryDrawing>
+                  <GeometryDrawing.Brush>
+                    <RadialGradientBrush>
+                      <GradientStop Color="MediumBlue" Offset="0.0" />
+                      <GradientStop Color="White" Offset="1.0" />
+                    </RadialGradientBrush>
+                  </GeometryDrawing.Brush>
+                  <GeometryDrawing.Geometry>
+                    <GeometryGroup>
+                      <RectangleGeometry Rect="0,0,50,50" />
+                      <RectangleGeometry Rect="50,50,50,50" />
+                    </GeometryGroup>
+                  </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+              </DrawingBrush.Drawing>
+            </DrawingBrush>
+          </StackPanel.Background>
+          <TextBlock FontSize="10pt" Margin="10">Hello, World!</TextBlock>
+        </StackPanel>
+      </VisualBrush.Visual>
+    </VisualBrush>
+  </Rectangle.Fill>
+</Rectangle>
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Panels :
+
+https://learn.microsoft.com/en-us/dotnet/desktop/wpf/controls/panels-overview?view=netframeworkdesktop-4.8
+
+
+https://wpf-tutorial.com/panels/grid/
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+MVVM 
+
+https://www.tutorialspoint.com/mvvm/index.htm
+
+-----------------------------------------------------------------------------------------------------------------------------------------------

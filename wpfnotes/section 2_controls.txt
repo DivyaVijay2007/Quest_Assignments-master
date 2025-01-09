@@ -1,0 +1,220 @@
+Textblock :
+
+<TextBlock Name="TextBlockWithHyperlink">
+    Some text
+    <Hyperlink
+        NavigateUri="https://www.google.co.in/"
+        RequestNavigate="Hyperlink_RequestNavigate">
+    </Hyperlink>
+    some more text
+</TextBlock>
+
+
+
+private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
+    System.Diagnostics.Process.Start(e.Uri.ToString());
+}
+
+
+
+            TextBlock myTextBlock = new TextBlock();
+            myTextBlock.FontSize = 18;
+            myTextBlock.FontWeight = FontWeights.Bold;
+            myTextBlock.FontStyle = FontStyles.Italic;
+            myTextBlock.Text = "Hello, world!";
+            this.Content = myTextBlock;
+
+
+---------------------------------------------------------------------------------------------------------------
+
+Label :
+
+<Label Name="Label1"
+       Content="Hello! I am Label Control"
+       Width="200" Height="40"
+       Canvas.Left="10" Canvas.Top="10"
+       FontSize="14" FontFamily="Georgia"
+       FontWeight="Bold"/>
+
+---------------------------------------------------------------------------------------------------------------
+
+Difference between label and textblock :
+
+Labels usually support single line text output while the TextBlock is intended for multiline text display.
+
+For example in wpf TextBlock has a property TextWrapping which enables multiline input; Label does not have this.
+
+---------------------------------------------------------------------------------------------------------------
+
+TextBox:
+
+<TextBox
+  Name="tbMultiLine"
+  TextWrapping="Wrap"
+  AcceptsReturn="True"
+  VerticalScrollBarVisibility="Visible"
+>
+  This TextBox will allow the user to enter multiple lines of text.  When the RETURN key is pressed, 
+  or when typed text reaches the edge of the text box, a new line is automatically inserted.
+</TextBox>
+
+---------------------------------------------------------------------------------------------------------------
+
+Button :
+
+<Button Name="btn1" Background="Pink" 
+        BorderBrush="Black" BorderThickness="1" 
+        Click="OnClick1" ClickMode="Hover">
+  ClickMe1
+</Button>
+
+
+
+void OnClick1(object sender, RoutedEventArgs e)
+{
+    btn1.Background = Brushes.LightBlue;
+}
+
+
+some events :
+
+mouse enter 
+mouse leave
+mouse double click
+
+
+---------------------------------------------------------------------------------------------------------------
+
+Radiobuuton :
+
+<RadioButton Margin="10,5,0,0" GroupName="MCSites" Background="Yellow" Foreground="Blue"> C# Corner </RadioButton>  
+<RadioButton Margin="10,5,0,0" GroupName="MCSites" Background="Yellow" Foreground="Orange"> VB.NET Heaven </RadioButton>  
+<RadioButton Margin="10,5,0,0" GroupName="MCSites" Background="Yellow" Foreground="Green"> Longhorn Corner </RadioButton>  
+<RadioButton Margin="10,5,0,0" GroupName="MCSites" Background="Yellow" Foreground="Purple"> Mindcracker </RadioButton>  
+
+
+privatevoid button1_Click(object sender, RoutedEventArgs e) {  
+    if (Btn1.IsChecked == true) MessageBox.Show(Btn1.Content.ToString());  
+    elseif(Btn2.IsChecked == true)  
+    MessageBox.Show(Btn2.Content.ToString());  
+    elseif(Btn3.IsChecked == true)  
+    MessageBox.Show(Btn3.Content.ToString());  
+    else MessageBox.Show(Btn4.Content.ToString());  
+}  
+
+---------------------------------------------------------------------------------------------------------------
+
+CheckBox:
+
+<CheckBox Name="McCheckBox"  
+   Canvas.Left="10" Canvas.Top="10"  
+   Content="Check Me"  
+   IsChecked="True" IsThreeState="True"  
+   Checked="McCheckBox_Checked" Unchecked="McCheckBox_Unchecked">  
+</CheckBox>
+
+
+private void McCheckBox_Checked(object sender, RoutedEventArgs e) {  
+    McCheckBox.Content = "Checked";  
+}  
+private void McCheckBox_Unchecked(object sender, RoutedEventArgs e) {  
+    McCheckBox.Content = "Unchecked";  
+}  
+
+Creating a CheckBox Dynamically:
+
+
+private void CreateDynamicCheckBox() {  
+    CheckBox chb = new CheckBox();  
+    chb.Content = "Click me";  
+    chb.IsChecked = true;  
+    chb.Foreground = new SolidColorBrush(Colors.Orange);  
+    chb.IsChecked = true;  
+    LayoutRoot.Children.Add(chb);  
+}  
+
+---------------------------------------------------------------------------------------------------------------
+
+PasswordBox:
+
+
+<PasswordBox Height="42" Width="200" Margin="22,28,28,0" Name="passwordBox1" VerticalAlignment="Top" Background="LightBlue" Foreground="DarkBlue" MaxLength="25" PasswordChar="*" Password="mahesh" PasswordChanged="passwordBox1_PasswordChanged" />  
+
+
+
+---------------------------------------------------------------------------------------------------------------
+Image:
+
+create image folder and use it :
+
+<Image Width="300" Height="200" Source="Flower.jpg" />
+
+
+---------------------------------------------------------------------------------------------------------------
+
+Slider :
+
+without databinding and trigger :
+
+
+<StackPanel>
+    <Slider Name="RedSlider" Width="300" Height="20" Maximum="255" Minimum="0" Canvas.Left="30" Canvas.Top="240" ValueChanged="RedSlider_ValueChanged" />
+    <TextBlock x:Name="myTextblock"></TextBlock>
+</StackPanel>
+
+
+        private void RedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (myTextblock!=null && RedSlider.Value>20)
+            {
+                myTextblock.Text = "Slider value is :" + RedSlider.Value;
+                myTextblock.FontSize = RedSlider.Value;
+            }
+        }
+
+
+
+with databinding and trigger :
+
+        <Slider Name="RedSlider" Width="300" Height="20" Maximum="255" Minimum="0" Canvas.Left="30" Canvas.Top="240"  />
+        <TextBlock x:Name="myTextblock" FontSize="{Binding ElementName=RedSlider , Path=Value, UpdateSourceTrigger=PropertyChanged }">Hello world</TextBlock>
+		
+		
+
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+Calendar :
+
+<Calendar SelectionMode="SingleRange">
+</Calendar>
+
+
+https://www.c-sharpcorner.com/UploadFile/mahesh/wpf-calendar-control/
+
+---------------------------------------------------------------------------------------------------------------
+
+DatePicker:
+
+<DatePicker Height="25" HorizontalAlignment="Left" Margin="42,26,0,0" Name="datePicker1" VerticalAlignment="Top" Width="115" />  
+
+
+---------------------------------------------------------------------------------------------------------------
+
+Expander control :
+
+        <Expander Name="ExpanderControl" Header="Click to Expand" HorizontalAlignment="Left">
+            <TextBlock TextWrapping="Wrap" FontSize="14" FontWeight="Light" Foreground="Black">
+        This is an Expander control. Within this control, all contents will be wrapped.
+        At run-time, you may expand or collapse this control. Type more text here to be typed.
+        Jump around and hype.
+            </TextBlock>
+        </Expander>
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+

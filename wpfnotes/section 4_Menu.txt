@@ -1,0 +1,119 @@
+Menu - create menu items 
+
+
+<DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Tools" >
+                <MenuItem Header="_Manage users">
+                    <MenuItem.Icon>
+                        <Image Source="/WpfTutorialSamples;component/Images/user.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Show groups" IsCheckable="True" IsChecked="True" />
+            </MenuItem>
+        </Menu>
+</DockPanel>
+	
+	
+	
+-----------------------------------------------------------------------------------------------------------------------
+
+Toolbar control :
+
+
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Click="Button_Click" ToolTip="Delete Text">
+                    <Image Width="20" Source="https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/256/Actions-edit-delete-icon.png"></Image>
+                </Button>
+                <Separator></Separator>
+                <Label>Font size :</Label>
+                <ComboBox Name="cmb1" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem>8</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">10</ComboBoxItem>
+                    <ComboBoxItem>12</ComboBoxItem>
+                    <ComboBoxItem>14</ComboBoxItem>
+                </ComboBox>
+            </ToolBar>
+        </ToolBarTray>
+        <TextBox x:Name="myTextbox">
+        </TextBox>
+        
+    </DockPanel>
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            myTextbox.Text = "";
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var res = cmb1.Text;
+            ComboBox comboBox = sender as ComboBox;
+            ComboBoxItem comboBoxItem = comboBox.SelectedItem as ComboBoxItem;
+            string newFontSize = (string)comboBoxItem.Content;
+            int temp;
+            if (Int32.TryParse(newFontSize,out temp))
+            {
+                if (myTextbox!=null)
+                {
+                    myTextbox.FontSize = temp;
+                }
+            }
+        }
+
+
+-----------------------------------------------------------------------------------------------------------------------	
+
+ContextMenu :
+
+A context  menu, often referred to as a popup or pop-up menu, is a menu which is shown upon certain user actions, usually a right-click with the mouse on a specific control or window. Contextual menus are often used to offer functionality that's relevant within a single control.
+
+
+  <Grid>
+        <Button Content="Right-click me!" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Menu item 1" />
+                    <MenuItem Header="Menu item 2" />
+                    <Separator />
+                    <MenuItem Header="Menu item 3" />
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+    </Grid>
+
+-----------------------------------------------------------------------------------------------------------------------	
+
+
+Status bar :
+
+
+The status bar is used to show various information about the current state of the application, like cursor position, word count, progress of tasks and so on. Fortunately for us, WPF comes with a nice StatusBar control, making it very easy to add status bar functionality to your applications.
+
+
+<DockPanel>
+		<StatusBar DockPanel.Dock="Bottom">
+			<StatusBarItem>
+				<TextBlock Name="lblCursorPosition" />
+			</StatusBarItem>
+		</StatusBar>
+		<TextBox AcceptsReturn="True" Name="txtEditor" SelectionChanged="txtEditor_SelectionChanged" />
+	</DockPanel>
+	
+	
+		private void txtEditor_SelectionChanged(object sender, RoutedEventArgs e)
+		{
+
+			int row = txtEditor.GetLineIndexFromCharacterIndex(txtEditor.CaretIndex);
+			int col = txtEditor.CaretIndex - txtEditor.GetCharacterIndexFromLineIndex(row);
+			lblCursorPosition.Text = "Line " + (row + 1) + ", Char " + (col + 1);
+		}
+
+
+-----------------------------------------------------------------------------------------------------------------------	
